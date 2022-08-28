@@ -1,0 +1,109 @@
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Employee Application</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logOut()">Logout</a>
+        </li>
+        <li *ngIf="!isUserAuthenticated()" class="nav-item active">
+          <a class="nav-link" routerLink="/Employee">Employees</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  
+  <form class="form-horizontal" [formGroup]="employeeForm">
+      <h1 style="text-align: center;">Welcome to Employee Admin Panel</h1>
+      <div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="pwd">Employee Name:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="txtEmployeeName" formControlName="employeeName"
+            placeholder="Name of Employee">
+        </div>
+      </div>
+      <br />
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="pwd">Employee Address :</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="txtEmployeeAddress" formControlName="employeeAddress"
+            placeholder="Employee Address">
+        </div>
+      </div>
+      <br />
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="pwd">Employee City:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="txtEmployeeCity" formControlName="employeeCity" placeholder="City of Employee">
+        </div>
+      </div>
+      <br />
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="pwd">Employee Phone :</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="txtPhone" formControlName="employeePhone" placeholder="Employee Phone">
+        </div>
+      </div>
+      <br />
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="pwd">Employee Gender :</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="txtGender" formControlName="employeeGender" placeholder="Employee Gender">
+        </div>
+      </div>
+      <br />
+       <div class="form-group">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <button type="submit" class="btn btn-primary" (click)="PostEmployee(employeeForm.value)">Submit</button>
+            </div>
+            <div class="col-sm">
+              <button type="submit" class="btn btn-primary" (click)="UpdateEmployee(employeeForm.value)">Update</button>
+            </div>
+            <div class="col-sm">
+              <button type="submit" class="btn btn-primary" (click)="Clear(employeeForm.value)">Clear</button>
+            </div>
+          </div>
+        </div>
+      <br />
+      </div>
+      <div>
+        <div class="alert alert-success" style="text-align: center;"><b>Employee List</b></div>
+        <div class="table-responsive" style="text-align: center;">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Employee Name</th>
+              <th scope="col">Employee Address</th>
+              <th scope="col">Employee City</th>
+              <th scope="col">Employee Phone</th>
+              <th scope="col">Employee Gender</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let emp of employeeList | async; index as i">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{emp.employeeName}}</td>
+              <td>{{emp.employeeAddress}}</td>
+              <td>{{emp.employeeCity}}</td>
+              <td>{{emp.employeePhone}}</td>
+              <td>{{emp.employeeGender}}</td>
+              <td><button type="button" class="btn1" matTooltip="Click Edit Button" (click)='employeeDetailsToEdit(emp.employeeId)'>Edit</button>
+                |
+                <button type="button" class="btn1" matTooltip="Click Delete Button" (click)="DeleteEmployee(emp.employeeId)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+    </form>
